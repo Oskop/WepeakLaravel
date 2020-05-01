@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Water;
 
 class WaterController extends Controller
 {
@@ -21,7 +22,7 @@ class WaterController extends Controller
 
     public function getWaterList()
     {
-      $data = App\Water::all();
+      $data = Water::all();
       return response()->json($data, 200);
     }
 }
