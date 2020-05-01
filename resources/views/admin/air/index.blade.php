@@ -2,6 +2,9 @@
 
 @section('title', 'Jenis Air')
 
+@section('air_active', 'mm-active')
+@section('jenis_air_active', 'mm-active')
+
 @section('container')
 
 <div class="app-page-title">
@@ -26,56 +29,52 @@
 <div class="row">
     <div class="col-md-12">
         <div class="main-card mb-3 card">
-            <div class="card-header">Jenis Air
-                <div class="btn-actions-pane-right">
-                    <a href="{{ route('water.create') }}"
-                      class="btn btn-primary">Tambah</a>
-                      <select class="custom-select" id="pilihPh" style="width:100px;">
-                        <option value="" selected>Pilih ph</option>
-                        <option value="11,5">11,5</option>
-                        <option value="9,5">9,5</option>
-                        <option value="9,0">9,0</option>
-                        <option value="8,5">8,5</option>
-                        <option value="7,0">7,0</option>
-                        <option value="5,5">5,5</option>
-                        <option value="2,5">2,5</option>
-                      </select>
+            <div class="card-header">
+              <div id="filter-form" class="form-inline" role="form">
+                <div class="form-group m-1">
+                  <select class="form-control m-1 filter" name="nama" id="nama">
+                    <option value="">Jenis Air</option>
+                    @foreach($opsiAir as $w)
+                    <option value="{{ @$w->nama }}">{{ @$w->nama }}</option>
+                    @endforeach
+                  </select>
                 </div>
+                <div class="form-group m-1">
+                  <select class="form-control m-1 filter" name="ph" id="ph">
+                    <option value="">pH</option>
+                    @foreach($opsiph as $w)
+                    <option value="{{ @$w->ph }}">{{ @$w->ph }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <!-- <div class="form-group m-1">
+                  <select class="form-control m-1" name="manfaat" id="manfaat"
+                   style="width:30%;">
+                    <option value="">Manfaat</option>
+                    @foreach($opsiManfaat as $w)
+                    <option value="{{ @$w->manfaat }}" style="width:30%;"
+                      >{{ @$w->manfaat }}</option>
+                    @endforeach
+                  </select>
+                </div> -->
+              </div>
+              <div class="btn-actions-pane-right">
+                  <a href="{{ route('water.create') }}"
+                    class="btn btn-primary">Tambah</a>
+              </div>
             </div>
             <div class="table-responsive" style="padding:10px;">
-                <table class="align-middle mb-0 table table-borderless table-striped table-hover datatable">
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover datatable"
+                 id="water-table">
                     <thead>
                     <tr>
-                        <th class="text-center">#</th>
-                        <th class="text-center">Nama</th>
-                        <th class="text-center">pH Air</th>
+                        <th class="text-left">#</th>
+                        <th class="text-leftr">Nama</th>
+                        <th class="text-left">pH Air</th>
                         <th class="text-center">Manfaat</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-left">Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
-                      @foreach( $air as $b => $a)
-                    <tr>
-
-                        <td class="text-center text-muted">{{$b+1}}</td>
-                        <td class="text-center">{{$a->nama}}</td>
-                        <td class="text-center">{{$a->ph}}</td>
-                        <td class="text-center" style="width:30em;">{{$a->manfaat}}</td>
-                        <td class="text-center">
-                          <a href="{{ route('water.show',['water' => $a->id ]) }}"
-                            class="btn btn-info">Detail</a>
-                          <a href="{{ route('water.edit',['water' => $a->id ]) }}"
-                            class="btn btn-warning">Ubah</a>
-                          <form action="{{ route('water.destroy', ['water' => $a->id]) }}" method="post" class="d-inline">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" onclick="return confirm('Yakin Ingin Menghapus?')" class="btn btn-danger">Hapus</button>
-                          </form>
-                        </td>
-
-                    </tr>
-                    @endforeach
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -91,13 +90,52 @@
 
 @section('customjs')
 <script type="text/javascript">
-  $('#pilihPh').change(function() {
-    dd = document.getElementById('pilihPh').value;
-    if (dd == '') {
-      window.location.href = 'http://localhost:8000/water';
-    } else if (dd != '') {
-      window.location.href = 'http://localhost:8000/water' + '?ph=' + dd;
-    }
+$(document).ready(function () {
+  var table = $('.datatable').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '{{ route("water.filter") }}',
+        data: function(d) {
+          d.nama = $('select[name=nama]').val();
+          d.ph = $('select[name=ph]').val();
+          // d.manfaat = $('select[name=manfaat]').val();
+        },
+      },
+      columns: [
+          {data: 'id', name: 'id'},
+          {data: 'nama', name: 'nama'},
+          {data: 'ph', name: 'ph'},
+          {data: 'manfaat', name: 'manfaat', "width": "50%"},
+          {data: 'action', name: 'action', orderable: false, searchable: false},
+      ],
   });
+  table.draw();
+  $('.filter').on('change', function(e) {
+    table.destroy();
+    $('tbody').remove();
+    table = $('#water-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url: '{{ route("water.filter") }}',
+          data: function(d) {
+            d.nama = $('select[name=nama]').val();
+            d.ph = $('select[name=ph]').val();
+            // d.manfaat = $('select[name=manfaat]').val();
+          },
+        },
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'nama', name: 'nama'},
+            {data: 'ph', name: 'ph'},
+            {data: 'manfaat', name: 'manfaat', "width": "50%"},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ],
+    });
+    // table.draw();
+    e.preventDefault();
+  });
+});
 </script>
 @endsection

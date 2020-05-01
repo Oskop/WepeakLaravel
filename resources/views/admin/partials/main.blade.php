@@ -25,39 +25,21 @@
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
-<script type="text/javascript" src="{{asset('main.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/scripts/main.js')}}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<!-- <script type="text/javascript">
   $(document).ready(function() {
     $('.datatable').DataTable();
   } );
-</script>
+</script> -->
 
 @yield('customjs')
-
-<!-- <?php if (!isset($_GET['action'])): ?>
-  <?php if (isset($_SESSION['flash'])): ?>
-    <div id="toast-container" class="toast-top-center">
-      <div class="toast toast-info" aria-live="polite" style="opacity:100%;">
-        <div class="toast-progress" style="width: 100%;"></div>
-        <div class="toast-title"><?=$_SESSION['flash'];?></div>
-        <div class="toast-message"><?=$_SESSION['flash_message'];?></div>
-      </div>
-    </div>
-
-    <?php if (isset($_SESSION['timer'])) {
-      $now = time();
-      if ($now - $_SESSION['timer'] == 360) {
-        $_SESSION['timer'] = null;$now=null;
-        // $_SESSION['flash'] = null;$_SESSION['flash_message'] = null;
-      }
-    }
-    if (isset($_SESSION['timer'])) {
-      $_SESSION['flash'] = null;$_SESSION['flash_message'] = null;
-    }
-  endif; ?>
-<?php endif; ?> -->
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -137,7 +119,6 @@
         alert("Lah buat apa pencet Lunas? Jangan alasan kepencet.");
       }
     });
-    $('.datatable').DataTable();
   });
 </script>
 </body>

@@ -11,15 +11,23 @@
 |
 */
 
-use Illuminate\Http\Request;
-use App\Water;
+// use Illuminate\Http\Request;
+// use App\Water;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', 'HomeController@index');
 
 Route::resource('water', 'WaterController');
-
+Route::resource('container', 'ContainerController');
+Route::resource('transaction', 'TransactionController');
+Route::resource('d_transaction', 'DTransactionController');
+Route::get('productsearch', 'ProductController@products')->name('product.filter');
+Route::get('containerfilter', 'ContainerController@getCustomFilter')->name('container.filter');
+Route::get('waterfilter', 'WaterController@waterfilter')->name('water.filter');
+Route::get('transactionfilter', 'TransactionController@transactionjson')->name('transaction.filter');
+Route::get('d_transactionfilter', 'DTransactionController@dts')->name('d_transaction.filter');
+// Route::get('containerfilters', 'ContainerController@getCustomFilter')->name('containers.filter');
+Route::resource('product', 'ProductController');
+Auth::routes();
 // Route::get('/air/{ph?}', 'WaterController@water');
 // // Route::get('/air', 'WaterController@index');
 // Route::get('/waters/{ph?}', function ($ph = null)
@@ -59,3 +67,19 @@ Route::resource('water', 'WaterController');
 //   // return view('admin.air.index', compact($sss));
 // }
 // );
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

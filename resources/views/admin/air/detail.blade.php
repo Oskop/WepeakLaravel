@@ -27,7 +27,35 @@
                     <div class="col-1"> : </div>
                     <div class="col-6">{{ @$air->manfaat }}</div>
                   </div>
-                <a href="." class="btn btn-primary pull-right" style="margin-top:4px;">Kembali</a>
+                  <div class="row">
+                    <div class="col-2"><h6>Relasi</h6></div>
+                    <div class="col-1"> : </div>
+                    <div class="col-6">
+                      <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                          <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">ID Air</th>
+                                <th class="text-center">ID Wadah</th>
+                                <th class="text-center">Isi</th>
+                                <th class="text-center">Harga</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($produk as $b => $a)
+                            <tr>
+                              <td class="text-center">{{$b+1}}</td>
+                              <td class="text-center">{{$a->water_id}}</td>
+                              <td class="text-center">{{$a->container_id}}</td>
+                              <td class="text-center">{{$a->isi}} mL</td>
+                              <td class="text-center">Rp. {{$a->harga}}</td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                    </div>
+                  </div>
+                <a href="{{ route('water.index') }}" class="btn btn-primary pull-right" style="margin-top:4px;">Kembali</a>
           </div>
       </div>
   </div>
