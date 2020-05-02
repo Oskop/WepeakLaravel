@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::get('water-list', 'API\WaterController@getWaterList');
 Route::get('water', 'API\WaterController@getWater');
-Route::get('dashboard', 'API\TransactionController@index');
+Route::get('dashboard', 'API\TransactionController@dashboardNeed');
 
 Route::get('/', function () {
   return [
