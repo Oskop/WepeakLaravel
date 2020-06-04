@@ -28,13 +28,6 @@ Route::get('/', function () {
   ];
 });
 
-Route::get('/bla', function()
-{
-  return [
-    'response' => 'Ye'
-  ];
-});
-
 // Route::post('auth/login', 'Auth\LoginController@login');
 // Route::post('auth/register', 'Auth\RegisterController@register');
 //
